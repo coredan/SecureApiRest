@@ -11,6 +11,6 @@ There are some jUnit and mock test /src/test/java/com/das/.
 
 ### Install
 
-:arrow_forward: **[Download latest archives from release page.](https://github.com/coredan/SecureApiRest)**
+:arrow_forward: **[Download latest archives from here.](https://github.com/coredan/SecureApiRest)**
 
 ### For more info and application prerequisites, please visit [the SecureApiRest Wiki](https://github.com/coredan/SecureApiRest/wiki) page.
