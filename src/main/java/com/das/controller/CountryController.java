@@ -133,7 +133,7 @@ public class CountryController {
 				return new ResponseEntity<Country>(HttpStatus.CONFLICT);
 			}
 			// updating model values:
-			//model.setName(country.getName());
+			model.setName(country.getName());
 			model.setAbbr(country.getAbbr());
 			// Saving and storing the resulting country object.
 			// If the result is null, returns an error:
