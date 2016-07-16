@@ -7,6 +7,8 @@
 */
 package com.das.repository;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
@@ -20,7 +22,13 @@ import com.das.model.Country;
 public interface CountryRepository extends PagingAndSortingRepository<Country, Integer> {
 
 	@Query( "select c from Country c" )
-	Page<Country> findAllCustom( Pageable pageable );	
+	Page<Country> findAllCustom( Pageable pageable );
+	
+	@Query( "select c from Country c" )
+	List<Country> findAll();
+	
+	@Query("SELECT COUNT(c) FROM Country c")
+    Integer getTotalSize();
 	
 	Page<Country> findAllByNameContaining( String name, Pageable pageable);
 	

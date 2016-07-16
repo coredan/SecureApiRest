@@ -40,6 +40,7 @@ import com.das.repository.CountryRepository;
 @RequestMapping(value="/api/v1/country", headers="Accept=application/com.das.SecureApiRest-v1.0+json")
 public class CountryController {
 	public static final Long version = 1L;
+	public static final int PAGESIZE = 20;
 	public String resHeader = null;  
 	
 	@Autowired
@@ -54,10 +55,14 @@ public class CountryController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)	
 	public ResponseEntity<Resources<Resource<Country>>> findAll(
-			@RequestParam(value = "page", required = false, defaultValue = "0") Integer page) {
+			@RequestParam(value = "page", required = false, defaultValue = "-1") Integer page) {
 		
-		//Getting paginated countries from repository:
-		Page<Country> countries = repository.findAllCustom(new PageRequest(page, 20));
+		
+		//Getting all countries list from repository or paged (if "page" parameter is provided):
+		int currentPage = page > -1 ? page : 0;
+		int size = page > -1 ? PAGESIZE : repository.getTotalSize();
+		Page<Country> countries = repository.findAllCustom(new PageRequest(currentPage, size));
+				
 		// Building the (HATEOAS) root Links:
 		List<Link> links = new ArrayList<Link>();
 		
@@ -68,7 +73,8 @@ public class CountryController {
 		if (!countries.isLast()) {
 			links.add(linkTo(methodOn(CountryController.class).findAll(page + 1)).withRel("next"));		
 		}		
-		// Building the response:s
+		
+		// Building the response:
 		// Change the Page Object to list of Resource.
 		List<Resource<Country>> resources = countryToResource(countries.getContent().toArray(new Country[0]));
 		Resources<Resource<Country>> res = new Resources<>(resources, links);
@@ -78,7 +84,7 @@ public class CountryController {
 	/**
 	 * Adds a new country to the list (POST Method)
 	 * @param country with the jSON format {"name":"Country_Name","abbr":"Country_Abbreviation"}
-	 * @return Resp
+	 * @return Resources containing the added country object
 	 */
 	@RequestMapping(method = RequestMethod.POST, headers = "Accept=application/json")
 	public ResponseEntity<Resource<Country>> add(@RequestBody Country country) {
@@ -165,7 +171,9 @@ public class CountryController {
 			result.put("status", String.format("The country %s[%s] has been removed:",c.getName(),c.getAbbr()));
 			repository.delete(c);			
 		} catch (Exception e) {
-			result.put("status", String.format("An error has ocurred deleting the country with id: %d",id));
+			result.put("status", 
+					String.format("it has not been possible to eliminate the country with the id %d. "
+							+ "Are you sure it still exists?: ",id));			
 			return new ResponseEntity<Map<String,String>>(result, HttpStatus.BAD_REQUEST);
 		}
 		return ResponseEntity.ok(result);
