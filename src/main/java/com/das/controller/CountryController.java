@@ -14,7 +14,9 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -150,9 +152,23 @@ public class CountryController {
 		return new ResponseEntity<Country>(HttpStatus.NOT_FOUND);
 	}
 
+	/**
+	 * Deletes a country from the countries list (persistently)
+	 * @param id the ID of the country to delete.
+	 * @return HTTP200 OK if is possible to delete the country. Otherwise returns BAD REQUEST.
+	 */
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-	public void delete(@PathVariable int id) {
-		repository.delete(id);
+	public ResponseEntity<Map<String, String>> delete(@PathVariable int id) {
+		Map<String, String> result = new HashMap<>();		
+		try{
+			Country c = repository.findOne(id);
+			result.put("status", String.format("The country %s[%s] has been removed:",c.getName(),c.getAbbr()));
+			repository.delete(c);			
+		} catch (Exception e) {
+			result.put("status", String.format("An error has ocurred deleting the country with id: %d",id));
+			return new ResponseEntity<Map<String,String>>(result, HttpStatus.BAD_REQUEST);
+		}
+		return ResponseEntity.ok(result);
 	}
 	
 	/**
