@@ -1,4 +1,4 @@
-<img align="center" src="https://lh3.googleusercontent.com/-8ETahT9f7wY/V4rqiJKEx-I/AAAAAAAAHZk/1EoGX05D-ygbyUSwhFYAkSixPRng9-CKQCCo/s300/sr_api-logo.png" alt="SecureRestApi">
+<img align="center" src="https://lh3.googleusercontent.com/-FfVls691QEo/V4rrpcH_GSI/AAAAAAAAHZw/OPlqvUYoakMngNFmLNW8JyZGeh0OhtkVQCCo/s299/sr_api-logo.png" alt="SecureRestApi">
 
 SecureApiRest
 =================
