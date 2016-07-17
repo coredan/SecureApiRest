@@ -109,6 +109,11 @@ public class CountryController {
 		return new ResponseEntity<Resource<Country>>(HttpStatus.CONFLICT);
 	}
 
+	/**
+	 * Returns the Country to which provided id belongs-
+	 * @param id unique identifier of the country
+	 * @return Country object (jSON) if it's found.
+	 */
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<Resource<Country>> findOne(@PathVariable int id) {
 		List<Link> links = new ArrayList<Link>();
