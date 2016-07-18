@@ -1,6 +1,6 @@
 <img align="center" src="https://lh3.googleusercontent.com/-uKEZVneZbIE/V4zOCSBNUAI/AAAAAAAAHaU/BDHh4F_AjbcrPnWRxRUGyF4q-ENrOxtVQCLcB/h120/sr_api-logo_256.png" alt="SecureRestApi">
 
-SecureApiRest
+SecureRestApi
 =================
 
 SecureApiRest is a small/simple Restful API created with **Spring Initilizr** tool. Check it: https://start.spring.io/.
